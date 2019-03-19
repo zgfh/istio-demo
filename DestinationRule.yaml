@@ -18,10 +18,10 @@ spec:
         maxRequestsPerConnection: 10000 # 对某一后端的请求中，一个连接内能够发出的最大请求数量。如果将这一参数设置为 1 则会禁止 keep alive 特性
         maxRetries: 1 # 在给定时间内，集群中所有主机可以执行的最大重试次数
     outlierDetection:
-      consecutiveErrors: 1
-      interval: 1s
-      baseEjectionTime: 3m
-      maxEjectionPercent: 100
+      consecutiveErrors: 5 # 超过这一错误数量之后，主机将会被移出连接池。缺省值为 5。当上游服务是 HTTP 服务时，5xx 的返回码会被记为错误；当上游主机提供的是 TCP 服务时，TCP 连接超时和连接错误/故障事件会被记为错误。
+      interval: 10s # 在移除检测之间的时间间隔。缺省值为 10s，必须大于或等于 1ms。
+      baseEjectionTime: 30s # 最小的移除时间长度。主机每次被移除后的隔离时间等于被移除的次数和最小移除时间的乘积。这样的实现，让系统能够自动增加不健康上游服务实例的隔离时间。缺省为值为 30s。
+      maxEjectionPercent: 10 # 上游服务的负载均衡池中允许被移除的主机的最大百分比。缺省值为 10%
 #    tls: 见 https://istio.io/docs/reference/config/istio.networking.v1alpha3/#TLSSettings
 #    portLevelSettings: 见 https://istio.io/docs/reference/config/istio.networking.v1alpha3/#TrafficPolicy-PortTrafficPolicy
   subsets:
