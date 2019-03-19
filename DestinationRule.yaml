@@ -3,16 +3,29 @@ kind: DestinationRule
 metadata:
   name: httpbin
 spec:
-  host: httpbin
+  host: httpbin  # 目标服务的名称。 流量目标对应的服务，会在在平台的服务注册表中进行查找，如果查找失败，则丢弃流量。注: Istio 会根据规则所在的命名空间来处理这一名称，而非服务所在的命名空间。
   trafficPolicy:
-    connectionPool:
+    loadBalancer:
+      simple: ROUND_ROBIN # ROUND_ROBIN/LEAST_CONN/RANDOM/PASSTHROUGH ,默认: ROUND_ROBIN
+#      consistentHash:  见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#LoadBalancerSettings-ConsistentHashLB
+    connectionPool: # 见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#ConnectionPoolSettings
       tcp:
-        maxConnections: 1
+        maxConnections: 1 # 到目标主机的 HTTP1/TCP 最大连接数
+        connectTimeout: 10s # TCP 连接超时,
       http:
-        http1MaxPendingRequests: 1
-        maxRequestsPerConnection: 1
+        http1MaxPendingRequests: 1024 # 针对一个目标的 HTTP 请求的最大排队数量，缺省值为 1024
+        http2MaxRequests: 1024 # 对一个后端的最大请求数，缺省值为 1024
+        maxRequestsPerConnection: 10000 # 对某一后端的请求中，一个连接内能够发出的最大请求数量。如果将这一参数设置为 1 则会禁止 keep alive 特性
+        maxRetries: 1 # 在给定时间内，集群中所有主机可以执行的最大重试次数
     outlierDetection:
       consecutiveErrors: 1
       interval: 1s
       baseEjectionTime: 3m
       maxEjectionPercent: 100
+#    tls: 见 https://istio.io/docs/reference/config/istio.networking.v1alpha3/#TLSSettings
+#    portLevelSettings: 见 https://istio.io/docs/reference/config/istio.networking.v1alpha3/#TrafficPolicy-PortTrafficPolicy
+  subsets:
+  - name: testversion
+    labels: # 使用标签对服务注册表中的服务端点进行筛选。TODO, 是pod的标签？
+      version: v3
+#    trafficPolicy: # 同上面的trafficPolicy
