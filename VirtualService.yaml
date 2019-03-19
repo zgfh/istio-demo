@@ -24,11 +24,11 @@ spec:
         host: reviews.prod.svc.cluster.local  # 目标服务的名称
         subset: v1 # 服务子集的名称。仅对网格中的服务有效。必须在 DestinationRule 中定义子集。
       weight: 100 # 转发给一个服务版本的流量占总流量的百分比。几个目标的百分比之和必须等于 100。
-  - timeout: 30s # HTTP 请求的超时设置。
-  - retries:
+    timeout: 30s # HTTP 请求的超时设置。
+    retries:
       attempts: 3 # 为特定请求设置重试次数。重试之间的间隔是自动决定的（最少 25 毫秒）。实际重试次数还受路由规则中 timeout 设置的限制。
       perTryTimeout: 2s # 每次重试的超时时间。
-  - fault: # 应用到 HTTP 请求客户端的故障注入策略。注意：客户端启用了故障注入之后，超时和重试会被忽略。
+    fault: # 应用到 HTTP 请求客户端的故障注入策略。注意：客户端启用了故障注入之后，超时和重试会被忽略。
       abort:
         percent: 10 # 用来指定中断请求的比例。如果没有指定 percent，则中断所有请求。
         httpStatus: 400 # 用来定义返回给客户端服务的有效的 HTTP 错误代码。
@@ -36,10 +36,10 @@ spec:
         percent: 10 # 用来指定注入延迟的比例。如果没有指定 percent，为所有请求进行延迟注入。
         fixedDelay: 5s  # 在请求转发之前加入的固定延迟。
         
-#  - mirror: # 在把 HTTP 请求转发给预期目标的同时，对流量进行镜像并发送给其他目标。
-#  - corsPolicy: # 跨来源资源共享
-#  - appendHeaders: # 在向目标服务转发请求之前，加入额外的 HTTP Header
-#  - redirect: #302跳转, 见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#HTTPRedirect
-#  - rewrite: #rewrite, 见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#HTTPRewrite
+#    mirror: # 在把 HTTP 请求转发给预期目标的同时，对流量进行镜像并发送给其他目标。
+#    corsPolicy: # 跨来源资源共享
+#    appendHeaders: # 在向目标服务转发请求之前，加入额外的 HTTP Header
+#    redirect: #302跳转, 见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#HTTPRedirect
+#    rewrite: #rewrite, 见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#HTTPRewrite
 #  tls: #见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#TLSRoute
 #  tcp: #见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#TCPRoute
