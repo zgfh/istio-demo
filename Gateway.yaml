@@ -2,10 +2,10 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: my-gateway 
-  namespace: some-config-namespace
+  namespace: default # 注意，service 如果和 gateway 不再一个空间是不工作的
 spec:
   selector: # 指定生效本规则的pod
-    app: my-gateway-controller
+    istio: ingressgateway
   servers:
   - port: # 暴露的端口
       number: 80  
