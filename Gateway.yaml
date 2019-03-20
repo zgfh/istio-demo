@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: my-gateway 
+  namespace: some-config-namespace
+spec:
+  selector: # 指定生效本规则的pod
+    app: my-gateway-controller
+  servers:
+  - port: # 暴露的端口
+      number: 80  
+      name: http
+      protocol: HTTP  # 协议: HTTP|HTTPS|GRPC|HTTP2|MONGO|TCP|TLS
+    hosts: # 允许哪些服务绑定到本gateway
+    - "ns1/*"  # 允许 ns1 空间下的所有
+    - "ns2/foo.bar.com"  # 只允许 ns2 空间下的foo.bar.com
