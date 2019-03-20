@@ -14,3 +14,5 @@ spec:
     hosts: # 允许哪些服务绑定到本gateway
     - "ns1/*"  # 允许 ns1 空间下的所有
     - "ns2/foo.bar.com"  # 只允许 ns2 空间下的foo.bar.com
+#    tls:
+#    defaultEndpoint:
