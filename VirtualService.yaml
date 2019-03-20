@@ -43,3 +43,4 @@ spec:
 #    rewrite: #rewrite, 见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#HTTPRewrite
 #  tls: #见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#TLSRoute
 #  tcp: #见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#TCPRoute
+#  exportTo: * # 作用范围，".": 当前空间, "*":所有空间,默认所有空间
