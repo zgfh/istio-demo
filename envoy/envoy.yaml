@@ -11,29 +11,29 @@ static_resources:
     address:
       socket_address:
         protocol: TCP
-        address: 0.0.0.0
-        port_value: 10000
+        address: 0.0.0.0 # 监听的地址
+        port_value: 10000 # 监听的端口
     filter_chains:
     - filters:
-      - name: envoy.http_connection_manager
+      - name: envoy.http_connection_manager # 过滤器，这里是http协议过滤器
         typed_config:
           "@type": type.googleapis.com/envoy.config.filter.network.http_connection_manager.v2.HttpConnectionManager
           stat_prefix: ingress_http
-          route_config:
+          route_config: # 路由
             name: local_route
-            virtual_hosts:
+            virtual_hosts: # 虚拟主机，这里可以配置根据域名或者path进行不同的代理（类似nginx中的server）
             - name: local_service
-              domains: ["*"]
-              routes:
-              - match:
-                  prefix: "/"
+              domains: ["*"]  #  指定匹配的域名，这里表示匹配所有域名
+              routes:  
+              - match: 
+                  prefix: "/" # 匹配路径（类似nginx的location）
                 route:
-                  host_rewrite: www.baidu.com
-                  cluster: service_baidu
+                  host_rewrite: www.baidu.com 
+                  cluster: service_baidu  # 后端集群是那个（类似nginx里面指定upsteam）
           http_filters:
           - name: envoy.router
   clusters:
-  - name: service_baidu
+  - name: service_baidu # 定义cluster,(类似nginx里面定义upsteam)
     connect_timeout: 0.25s
     type: LOGICAL_DNS
     # Comment out the following line to test on v6 networks
@@ -43,9 +43,9 @@ static_resources:
       cluster_name: service_baidu
       endpoints:
       - lb_endpoints:
-        - endpoint:
+        - endpoint: # 后端地址，真正的后端地址
             address:
-              socket_address:
+              socket_address: 
                 address: www.baidu.com
                 port_value: 443
     tls_context:
