@@ -15,6 +15,13 @@ spec:
   resolution: STATIC # DNS:默认dns，根据dns查找ip;   STATIC: 静态配置，通过endpoints指定ip地址; NONE: 假设传入连接已经解决
   endpoints:
   - address: 2.2.2.2
+    ports: 
+      https: 443
+      http: 80
+#    labels:
+#    network:
+#    locality:
+#    weight:
   - address: 3.3.3.3
 #  location:  # 指定是否应将服务视为网格外部或网格的一部分。
 #  exportTo:  
