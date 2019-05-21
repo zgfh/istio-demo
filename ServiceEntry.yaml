@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: foo-ext-svc
+spec:
+  hosts: # 指定目标
+  - *.foo.com 
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP # 支持: HTTP|HTTPS|GRPC|HTTP2|MONGO|TCP|TLS
+  - number: 443
+    name: https
+    protocol: HTTPS
+  resolution: STATIC # DNS:默认dns，根据dns查找ip;   STATIC: 静态配置，通过endpoints指定ip地址; NONE: 假设传入连接已经解决
+  endpoints:
+  - address: 2.2.2.2
+  - address: 3.3.3.3
+#  location:  # 指定是否应将服务视为网格外部或网格的一部分。
+#  exportTo:  
+#  subjectAltNames:
