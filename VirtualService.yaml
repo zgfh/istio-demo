@@ -39,8 +39,8 @@ spec:
 #    mirror: # 在把 HTTP 请求转发给预期目标的同时，对流量进行镜像并发送给其他目标。
 #    corsPolicy: # 跨来源资源共享
 #    appendHeaders: # 在向目标服务转发请求之前，加入额外的 HTTP Header
-#    redirect: #302跳转, 见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#HTTPRedirect
-#    rewrite: #rewrite, 见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#HTTPRewrite
-#  tls: #见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#TLSRoute
-#  tcp: #见: https://istio.io/docs/reference/config/istio.networking.v1alpha3/#TCPRoute
+#    redirect: #302跳转, 见: https://istio.io/docs/reference/config/networking/v1alpha3/virtual-service/#HTTPRedirect
+#    rewrite: #rewrite, 见: https://istio.io/docs/reference/config/networking/v1alpha3/virtual-service/#HTTPRewrite
+#  tls: #见: https://istio.io/docs/reference/config/networking/v1alpha3/virtual-service/#TLSMatchAttributes
+#  tcp: #见: https://istio.io/docs/reference/config/networking/v1alpha3/virtual-service/#TCPRoute
 #  exportTo: * # 作用范围，".": 当前空间, "*":所有空间,默认所有空间
