@@ -1,5 +1,5 @@
 # istio-demo
-整理了 istio 1.1 版本的配置,方便复制粘贴
+整理了 istio 1.1 版本的配置,方便复制粘贴  
 istio 分以下几个大类配置：
 1. 流量管理： 本目录的配置
 1. 策略与遥测: policies-and-telemetry 目录 
