@@ -14,7 +14,7 @@ spec:
     protocol: HTTPS
   resolution: STATIC # DNS:默认dns，根据dns查找ip;   STATIC: 静态配置，通过endpoints指定ip地址; NONE: 假设传入连接已经解决
   endpoints:
-  - address: 2.2.2.2
+  - address: 2.2.2.2 # 可以是域名（resolution=DNS时）如 1.us.foo.com,也可以是IP；或者 unix:///absolute/path/to/socket
     ports: 
       https: 443
       http: 80
